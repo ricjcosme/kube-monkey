@@ -2,13 +2,13 @@ package deployments
 
 import (
 	"fmt"
-	"github.com/asobti/kube-monkey/config"
-	"github.com/asobti/kube-monkey/kubernetes"
+	"github.com/ricjcosme/kube-monkey/config"
+	"github.com/ricjcosme/kube-monkey/kubernetes"
 	"k8s.io/client-go/1.5/pkg/api"
 	"k8s.io/client-go/1.5/pkg/apis/extensions/v1beta1"
-	"k8s.io/client-go/1.5/pkg/labels"
-	"k8s.io/client-go/1.5/pkg/selection"
-	"k8s.io/client-go/1.5/pkg/util/sets"
+	//"k8s.io/client-go/1.5/pkg/labels"
+	//"k8s.io/client-go/1.5/pkg/selection"
+	//"k8s.io/client-go/1.5/pkg/util/sets"
 )
 
 func EligibleDeployments() ([]*Deployment, error) {
@@ -43,18 +43,19 @@ func EnrolledDeployments() ([]v1beta1.Deployment, error) {
 		return nil, err
 	}
 
-	filter, err := EnrollmentFilter()
-	if err != nil {
-		return nil, err
-	}
+	//filter, err := EnrollmentFilter()
+	//if err != nil {
+	//	return nil, err
+	//}
 
-	deployments, err := client.Extensions().Deployments(api.NamespaceAll).List(*filter)
+	deployments, err := client.Extensions().Deployments(config.WhitelistedNamespaces).List(api.ListOptions{})
 	if err != nil {
 		return nil, err
 	}
 	return deployments.Items, nil
 }
 
+/*
 func EnrollmentFilter() (*api.ListOptions, error) {
 	req, err := EnrollmentRequirement()
 	if err != nil {
@@ -68,3 +69,4 @@ func EnrollmentFilter() (*api.ListOptions, error) {
 func EnrollmentRequirement() (*labels.Requirement, error) {
 	return labels.NewRequirement(config.EnabledLabelKey, selection.Equals, sets.NewString(config.EnabledLabelValue))
 }
+*/

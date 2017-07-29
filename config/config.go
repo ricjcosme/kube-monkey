@@ -2,11 +2,12 @@ package config
 
 import (
 	"fmt"
-	"github.com/asobti/kube-monkey/config/param"
+	"time"
+
+	"github.com/ricjcosme/kube-monkey/config/param"
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
 	"k8s.io/client-go/1.5/pkg/util/sets"
-	"time"
 )
 
 const (
@@ -25,21 +26,25 @@ const (
 	KillAllLabelValue = "kill-all"
 
 	KubeSystemNamespace = "kube-system"
+	WhitelistedNamespaces = "default"
 )
 
 func SetDefaults() {
 	viper.SetDefault(param.DryRun, true)
-	viper.SetDefault(param.Timezone, "America/Los_Angeles")
-	viper.SetDefault(param.RunHour, 8)
+	viper.SetDefault(param.Timezone, "UTC")
+	viper.SetDefault(param.RunHour, 2)
 	viper.SetDefault(param.StartHour, 10)
 	viper.SetDefault(param.EndHour, 16)
 	viper.SetDefault(param.GracePeriodSec, 5)
 	viper.SetDefault(param.BlacklistedNamespaces, []string{KubeSystemNamespace})
 
 	viper.SetDefault(param.DebugEnabled, false)
-	viper.SetDefault(param.DebugScheduleDelay, 30)
+	viper.SetDefault(param.DebugScheduleDelay, 5)
 	viper.SetDefault(param.DebugForceShouldKill, false)
 	viper.SetDefault(param.DebugScheduleImmediateKill, false)
+
+	viper.SetDefault(param.InCluster, true)
+	viper.SetDefault(param.WhitelistedNamespaces, []string{WhitelistedNamespaces})
 }
 
 func setupWatch() {
@@ -117,4 +122,8 @@ func DebugForceShouldKill() bool {
 
 func DebugScheduleImmediateKill() bool {
 	return viper.GetBool(param.DebugScheduleImmediateKill)
+}
+
+func InCluster() bool {
+	return viper.GetBool(param.InCluster)
 }

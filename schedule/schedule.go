@@ -2,10 +2,10 @@ package schedule
 
 import (
 	"fmt"
-	"github.com/asobti/kube-monkey/calendar"
-	"github.com/asobti/kube-monkey/chaos"
-	"github.com/asobti/kube-monkey/config"
-	"github.com/asobti/kube-monkey/deployments"
+	"github.com/ricjcosme/kube-monkey/calendar"
+	"github.com/ricjcosme/kube-monkey/chaos"
+	"github.com/ricjcosme/kube-monkey/config"
+	"github.com/ricjcosme/kube-monkey/deployments"
 	"math/rand"
 	"time"
 )

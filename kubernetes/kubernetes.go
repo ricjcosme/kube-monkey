@@ -1,12 +1,25 @@
 package kubernetes
 
 import (
+	devconf "github.com/ricjcosme/kube-monkey/config"
 	kube "k8s.io/client-go/1.5/kubernetes"
 	"k8s.io/client-go/1.5/rest"
+	"k8s.io/client-go/1.5/tools/clientcmd"
 )
 
+func InCluster(InCluster bool) (*rest.Config, error) {
+	if InCluster {
+		cfg, e := rest.InClusterConfig()
+		return cfg, e
+	} else {
+		cfg, e := clientcmd.BuildConfigFromFlags("", "/Users/rc/.kube/config")
+		return cfg, e
+	}
+}
+
 func NewInClusterClient() (*kube.Clientset, error) {
-	config, err := rest.InClusterConfig()
+	config, err := InCluster(devconf.InCluster())
+
 	if err != nil {
 		return nil, err
 	}

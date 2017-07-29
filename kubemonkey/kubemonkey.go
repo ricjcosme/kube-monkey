@@ -2,12 +2,13 @@ package kubemonkey
 
 import (
 	"fmt"
-	"github.com/asobti/kube-monkey/calendar"
-	"github.com/asobti/kube-monkey/chaos"
-	"github.com/asobti/kube-monkey/config"
-	"github.com/asobti/kube-monkey/kubernetes"
-	"github.com/asobti/kube-monkey/schedule"
 	"time"
+
+	"github.com/ricjcosme/kube-monkey/calendar"
+	"github.com/ricjcosme/kube-monkey/chaos"
+	"github.com/ricjcosme/kube-monkey/config"
+	"github.com/ricjcosme/kube-monkey/kubernetes"
+	"github.com/ricjcosme/kube-monkey/schedule"
 )
 
 func verifyKubeClient() error {

@@ -2,7 +2,7 @@ package config
 
 import (
 	"fmt"
-	"github.com/asobti/kube-monkey/config/param"
+	"github.com/ricjcosme/kube-monkey/config/param"
 )
 
 func ValidateConfigs() error {

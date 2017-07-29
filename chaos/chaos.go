@@ -2,9 +2,9 @@ package chaos
 
 import (
 	"fmt"
-	"github.com/asobti/kube-monkey/config"
-	"github.com/asobti/kube-monkey/deployments"
-	"github.com/asobti/kube-monkey/kubernetes"
+	"github.com/ricjcosme/kube-monkey/config"
+	"github.com/ricjcosme/kube-monkey/deployments"
+	"github.com/ricjcosme/kube-monkey/kubernetes"
 	kube "k8s.io/client-go/1.5/kubernetes"
 	"k8s.io/client-go/1.5/pkg/api/v1"
 	"math/rand"
@@ -55,16 +55,16 @@ func (c *Chaos) Execute(resultchan chan<- *ChaosResult) {
 		return
 	}
 
-	// Is deployment still enrolled in kube-monkey
-	enrolled, err := c.deployment.IsEnrolled(client)
-	if err != nil {
-		resultchan <- c.NewResult(err)
-		return
-	}
-	if !enrolled {
-		resultchan <- c.NewResult(fmt.Errorf("Deployment %s is no longer enrolled in kube-monkey. Skipping\n", c.deployment.Name()))
-		return
-	}
+	//// Is deployment still enrolled in kube-monkey
+	//enrolled, err := c.deployment.IsEnrolled(client)
+	//if err != nil {
+	//	resultchan <- c.NewResult(err)
+	//	return
+	//}
+	//if !enrolled {
+	//	resultchan <- c.NewResult(fmt.Errorf("Deployment %s is no longer enrolled in kube-monkey. Skipping\n", c.deployment.Name()))
+	//	return
+	//}
 
 	// Has deployment been blacklisted since scheduling?
 	if c.deployment.IsBlacklisted(config.BlacklistedNamespaces()) {

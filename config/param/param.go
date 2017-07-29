@@ -9,7 +9,7 @@ const (
 
 	// The timezone to use when scheduling Pod terminations
 	// Type: string
-	// Default: America/Los_Angeles
+	// Default: UTC
 	Timezone = "kubemonkey.time_zone"
 
 	// The hour of the weekday when the scheduler should run
@@ -74,4 +74,17 @@ const (
 	// Type: bool
 	// Default: false
 	DebugScheduleImmediateKill = "debug.schedule_immediate_kill"
+
+	// InCluster if set to true, we're running in a cluster
+	// otherwise we're developing and running outside
+	// Type: bool
+	// Default: true
+	InCluster = "incluster.enabled"
+
+	// WhitelistedNamespace is the list of namespaces
+	// where terminations can be carried out
+	// Type: list
+	// Default: [ "default" ]
+	WhitelistedNamespaces = "kubemonkey.whitelisted_namespaces"
+
 )

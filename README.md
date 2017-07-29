@@ -67,14 +67,14 @@ At termination time, kube-monkey will:
 Clone the repository and build the container.
 
 ```
-$ go get github.com/asobti/kube-monkey
-$ cd $GOPATH/src/github.com/asobti/kube-monkey
+$ go get github.com/ricjcosme/kube-monkey
+$ cd $GOPATH/src/github.com/ricjcosme/kube-monkey
 $ make container
 ```
 
 ## Configuring
 kube-monkey is configured by a toml file placed at `/etc/kube-monkey/config.toml`.  
-Configuration keys and descriptions can be found in [`config/param/param.go`](https://github.com/asobti/kube-monkey/blob/master/config/param/param.go)
+Configuration keys and descriptions can be found in [`config/param/param.go`](https://github.com/ricjcosme/kube-monkey/blob/master/config/param/param.go)
 
 #### Example config file
 
@@ -92,7 +92,7 @@ blacklisted_namespaces = ["kube-system"] # Critical deployments live here
 Run kube-monkey as a Deployment within the Kubernetes cluster, in a namespace that has permissions to kill Pods
 in other namespaces (eg. `kube-system`).
 
-See dir [`examples/`](https://github.com/asobti/kube-monkey/tree/master/examples) for example Kubernetes yaml files.
+See dir [`examples/`](https://github.com/ricjcosme/kube-monkey/tree/master/examples) for example Kubernetes yaml files.
 
 ## Compatibility with Kubernetes
 

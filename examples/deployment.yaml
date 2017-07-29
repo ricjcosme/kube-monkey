@@ -15,7 +15,7 @@
           -  name: kube-monkey
              command:
                - "/kube-monkey"
-             image: kube-monkey:v0.1.0
+             image: ricjcosme/kube-monkey
              volumeMounts:
                - name: config-volume
                  mountPath: "/etc/kube-monkey"
