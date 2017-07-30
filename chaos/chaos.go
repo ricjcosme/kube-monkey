@@ -107,7 +107,7 @@ func (c *Chaos) Terminate(client *kube.Clientset) error {
 
 	targetPod := RandomPodName(pods)
 
-	fmt.Printf("Terminating pod %s for deployment %s\n", targetPod, c.deployment.Name())
+	fmt.Printf("Terminating pod %s for deployment %s\n", targetPod.Name, c.deployment.Name())
 	return c.DeletePod(client, targetPod)
 }
 
@@ -127,7 +127,7 @@ func (c *Chaos) TerminateAll(client *kube.Clientset) error {
 
 	for _, pod := range pods {
 		// In case of error, log it and move on to next pod
-		if err = c.DeletePod(client, pod.Name); err != nil {
+		if err = c.DeletePod(client, pod); err != nil {
 			fmt.Printf("Failed to delete pod %s for deployment %s", pod.Name, c.deployment.Name())
 		}
 	}
@@ -136,12 +136,12 @@ func (c *Chaos) TerminateAll(client *kube.Clientset) error {
 }
 
 // Deletes a pod for a deployment
-func (c *Chaos) DeletePod(client *kube.Clientset, podName string) error {
+func (c *Chaos) DeletePod(client *kube.Clientset, pod v1.Pod) error {
 	if config.DryRun() {
-		fmt.Printf("[DryRun Mode] Terminated pod %s for deployment %s\n", podName, c.deployment.Name())
+		fmt.Printf("[DryRun Mode] Terminated pod %s for deployment %s\n", pod, c.deployment.Name())
 		return nil
 	} else {
-		return c.deployment.DeletePod(client, podName)
+		return c.deployment.DeletePod(client, pod)
 	}
 }
 
@@ -168,8 +168,8 @@ func CreateClient() (*kube.Clientset, error) {
 }
 
 // Pick a random pod name from a list of Pods
-func RandomPodName(pods []v1.Pod) string {
+func RandomPodName(pods []v1.Pod) v1.Pod {
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	randIndex := r.Intn(len(pods))
-	return pods[randIndex].Name
+	return pods[randIndex]
 }

@@ -39,7 +39,7 @@ func SetDefaults() {
 	viper.SetDefault(param.BlacklistedNamespaces, []string{KubeSystemNamespace})
 
 	viper.SetDefault(param.DebugEnabled, false)
-	viper.SetDefault(param.DebugScheduleDelay, 5)
+	viper.SetDefault(param.DebugScheduleDelay, 10)
 	viper.SetDefault(param.DebugForceShouldKill, false)
 	viper.SetDefault(param.DebugScheduleImmediateKill, false)
 
