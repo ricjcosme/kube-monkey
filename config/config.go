@@ -44,6 +44,7 @@ func SetDefaults() {
 	viper.SetDefault(param.DebugScheduleImmediateKill, false)
 
 	viper.SetDefault(param.InCluster, true)
+	viper.SetDefault(param.KubeConfigPath, "~/.kube/config")
 	viper.SetDefault(param.WhitelistedNamespaces, []string{WhitelistedNamespaces})
 }
 
@@ -126,4 +127,8 @@ func DebugScheduleImmediateKill() bool {
 
 func InCluster() bool {
 	return viper.GetBool(param.InCluster)
+}
+
+func KubeConfigPath() string {
+	return viper.GetString(param.KubeConfigPath)
 }

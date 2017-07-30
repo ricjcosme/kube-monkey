@@ -41,6 +41,7 @@ func Run() error {
 		return err
 	}
 
+
 	for {
 		// Calculate duration to sleep before next run
 		sleepDuration := durationToNextRun(config.RunHour(), config.Timezone())

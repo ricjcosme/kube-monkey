@@ -87,4 +87,10 @@ const (
 	// Default: [ "default" ]
 	WhitelistedNamespaces = "kubemonkey.whitelisted_namespaces"
 
+	// KubeConfigPath is the path to one's local
+	// kubeconfig configuration file
+	// Type: string
+	// Default: ~/.kube/config
+	KubeConfigPath = "incluster.kubeconfigpath"
+
 )

@@ -7,12 +7,18 @@ import (
 	"k8s.io/client-go/1.5/tools/clientcmd"
 )
 
+
+// InCluster provides the configuration for the k8s client
+// InCluster or OutofCluster for dev purposes
+// based on the InCluster directive in the toml config file
+// Type: bool
+// Default: true
 func InCluster(InCluster bool) (*rest.Config, error) {
 	if InCluster {
 		cfg, e := rest.InClusterConfig()
 		return cfg, e
 	} else {
-		cfg, e := clientcmd.BuildConfigFromFlags("", "/Users/rc/.kube/config")
+		cfg, e := clientcmd.BuildConfigFromFlags("", devconf.KubeConfigPath())
 		return cfg, e
 	}
 }
