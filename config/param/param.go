@@ -93,4 +93,10 @@ const (
 	// Default: ~/.kube/config
 	KubeConfigPath = "incluster.kubeconfigpath"
 
+	// KubeMonkeyAppName is the app's name
+	// for identification in events
+	// Type: string
+	// Default: kube-monkey
+	KubeMonkeyAppName = "kubemonkey.appname"
+
 )

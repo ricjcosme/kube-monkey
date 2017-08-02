@@ -14,6 +14,7 @@ import (
 	"k8s.io/client-go/1.5/pkg/api/unversioned"
 	"time"
 	"strings"
+	"log"
 )
 
 type Deployment struct {
@@ -124,14 +125,15 @@ func (d *Deployment) DeletePod(client *kube.Clientset, pod v1.Pod) error {
 		GracePeriodSeconds: config.GracePeriodSeconds(),
 	}
 
-	var message []string = []string{"kube-monkey killed pod", pod.Name, "in deployment", d.name}
+	// K8s event definition
+	var message []string = []string{config.KubeMonkeyAppName(), "killed pod", pod.Name, "in deployment", d.name}
 	ev := &v1.Event{
 		TypeMeta: unversioned.TypeMeta{
 			Kind:       "Event",
 			APIVersion: "extensions/v1beta1",
 		},
 		ObjectMeta: v1.ObjectMeta{
-			Name: strings.Join([]string{"kube-monkey-", pod.Name},""),
+			Name: strings.Join([]string{config.KubeMonkeyAppName(), "-", pod.Name},""),
 		},
 		InvolvedObject: v1.ObjectReference{
 			Kind: "Pod",
@@ -144,16 +146,26 @@ func (d *Deployment) DeletePod(client *kube.Clientset, pod v1.Pod) error {
 		Type: "Warning",
 		Reason: "Chaos",
 		Message: strings.Join(message, " "),
-		Source: v1.EventSource{"kube-monkey", pod.ClusterName},
+		Source: v1.EventSource{config.KubeMonkeyAppName(), pod.ClusterName},
 		FirstTimestamp: unversioned.Time{time.Now()},
 		LastTimestamp: unversioned.Time{time.Now()},
 		Count: 1,
 	}
-	_, err := client.Core().Events(d.namespace).Create(ev)
-	if err != nil {
-		fmt.Println(err)
+
+	error := client.Core().Pods(d.namespace).Delete(pod.Name, deleteopts)
+
+	if error != nil {
+		// Oops, something went wrong with pod deletion
+		log.Fatal(error)
+	} else {
+		// K8s event creation - pod was killed
+		_, err := client.Core().Events(d.namespace).Create(ev)
+		if err != nil {
+			fmt.Println(err)
+		}
 	}
-	return client.Core().Pods(d.namespace).Delete(pod.Name, deleteopts)
+
+	return error
 }
 
 // Create a label filter to filter only for pods that belong to the this

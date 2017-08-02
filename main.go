@@ -5,7 +5,7 @@ import (
 
 	"github.com/ricjcosme/kube-monkey/config"
 	"github.com/ricjcosme/kube-monkey/kubemonkey"
-	"github.com/ricjcosme/kube-monkey/health"
+	"github.com/ricjcosme/kube-monkey/healthandmetrics"
 )
 
 func initConfig() {
@@ -20,9 +20,9 @@ func main() {
 	// Initialize configs
 	initConfig()
 
-	// Initialize health checker
-	fmt.Println("Starting health checker...")
-	go health.Run()
+	// Initialize health checker and metrics
+	fmt.Println("Starting health checker and metrics...")
+	go healthandmetrics.Run()
 
 	fmt.Println("Starting kube-monkey...")
 

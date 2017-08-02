@@ -41,11 +41,12 @@ func SetDefaults() {
 	viper.SetDefault(param.DebugEnabled, false)
 	viper.SetDefault(param.DebugScheduleDelay, 10)
 	viper.SetDefault(param.DebugForceShouldKill, false)
-	viper.SetDefault(param.DebugScheduleImmediateKill, false)
+	viper.SetDefault(param.DebugScheduleImmediateKill, true)
 
 	viper.SetDefault(param.InCluster, true)
 	viper.SetDefault(param.KubeConfigPath, "~/.kube/config")
 	viper.SetDefault(param.WhitelistedNamespaces, []string{WhitelistedNamespaces})
+	viper.SetDefault(param.KubeMonkeyAppName, "kube-monkey")
 }
 
 func setupWatch() {
@@ -131,4 +132,8 @@ func InCluster() bool {
 
 func KubeConfigPath() string {
 	return viper.GetString(param.KubeConfigPath)
+}
+
+func KubeMonkeyAppName() string {
+	return viper.GetString(param.KubeMonkeyAppName)
 }
